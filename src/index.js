@@ -1,12 +1,12 @@
 import Receiver from './Receiver';
 import UploadManager from './UploadManager';
 import UploadHandler from './UploadHandler';
-import status from './constants/status';
+import Status from './constants/Status';
 
 export {
-  Receiver,
-  UploadManager,
-  UploadHandler,
-  status,
+    Receiver,
+    UploadManager,
+    UploadHandler,
+    Status,
 };
 

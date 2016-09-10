@@ -1,26 +1,24 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var FileUploader = require('../../lib');
-var _ = require('lodash');
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { Receiver, UploadHandler, UploadManager, Status } from '../../../lib';
+import _ from 'lodash';
 
-var MyComponent = React.createClass({
-    getInitialState: function() {
-        return {
-            isPanelOpen: false,
-            isDragOver: false,
-            files: []
-        }
-    },
+class FileUpload extends Component {
+    state = {
+        isPanelOpen: false,
+        isDragOver: false,
+        files: []
+    };
 
-    openPanel: function() {
-        this.setState({ isPanelOpen: true });
-    },
+    openPanel = () => {
+        this.setState({isPanelOpen: true});
+    };
 
-    closePanel: function() {
-        this.setState({ isPanelOpen: false });
-    },
+    closePanel = () => {
+        this.setState({isPanelOpen: false});
+    };
 
-    onDragOver: function(e) {
+    onDragOver = (e) => {
         // your codes here:
         // if you want to check if the files are dragged over
         // a specific DOM node
@@ -29,17 +27,18 @@ var MyComponent = React.createClass({
         //        isDragOver: true
         //    });
         //}
-    },
+    };
 
-    onFileDrop: function({ target }, files) {
+    onFileDrop = ({target}, files) => {
         let node = ReactDOM.findDOMNode(this.refs.uploadPanel);
+
         if (target != node) {
             return false;
         }
 
-        files.map(function(_file) {
+        files.map((_file) => {
             if (_file.size > 1000 * 1000) {
-                _file.status = FileUploader.status.FAILED;
+                _file.status = Status.FAILED;
                 _file.error = 'file size exceeded maximum'
             }
         });
@@ -50,26 +49,12 @@ var MyComponent = React.createClass({
 
         // if you want to close the panel upon file drop
         this.closePanel();
-    },
+    };
 
-    onFileProgress: function(file) {
-    var files = this.state.files;
+    onFileProgress = (file) => {
+        let files = this.state.files;
 
-    files.map(function(_file) {
-        if (_file.id === file.id) {
-            _file = file;
-        }
-    });
-
-    this.setState({
-        files: files
-    });
-},
-
-    onFileUpdate: function(file) {
-        var files = this.state.files;
-
-        files.map(function(_file) {
+        files.map((_file) => {
             if (_file.id === file.id) {
                 _file = file;
             }
@@ -78,63 +63,77 @@ var MyComponent = React.createClass({
         this.setState({
             files: files
         });
-    },
+    };
 
-    _getStatusString: function(status) {
+    onFileUpdate = (file) => {
+        let files = this.state.files;
+
+        files.map((_file) => {
+            if (_file.id === file.id) {
+                _file = file;
+            }
+        });
+
+        this.setState({
+            files: files
+        });
+    };
+
+    getStatusString = (status) => {
         switch (status) {
-            case -1:
+            case Status.FAILED:
                 return 'failed';
                 break;
 
-            case 0:
+            case Status.PENDING:
                 return 'pending';
                 break;
 
-            case 1:
+            case Status.UPLOADING:
                 return 'uploading';
                 break;
 
-            case 2:
+            case Status.UPLOADED:
                 return 'uploaded';
                 break;
         }
-    },
+    };
 
-    render: function() {
-        var _this = this;
+    render() {
+        let { isPanelOpen, isDragOver, files } = this.state;
 
         return (
             <div>
                 <h1>{ this.props.title }</h1>
                 <p>You can upload files with size with 1 MB at maximum</p>
-                <FileUploader.Receiver
+                <Receiver
                     ref="uploadPanel"
                     customClass="upload-panel"
-                    isOpen={this.state.isPanelOpen}
+                    isOpen={isPanelOpen}
                     onDragEnter={this.openPanel}
                     onDragOver={this.onDragOver}
                     onDragLeave={this.closePanel}
-                    onFileDrop={this.onFileDrop} >
+                    onFileDrop={this.onFileDrop}>
                     <p>
                         {
-                            !this.state.isDragOver ? 'Drop here' : 'Files detected'
+                            !isDragOver ? 'Drop here' : 'Files detected'
                         }
                     </p>
-                </FileUploader.Receiver>
+                </Receiver>
                 <div>
                     <p>Upload List</p>
-                    <FileUploader.UploadManager
+                    <UploadManager
                         customClass="upload-list"
-                        files={this.state.files}
+                        files={files}
                         uploadUrl="/upload"
                         onUploadStart={this.onFileUpdate}
                         onUploadProgress={_.debounce(this.onFileProgress, 150)}
                         onUploadEnd={this.onFileUpdate}
                     >
                         {
-                            this.state.files.map(function(file, index) {
+                            files.map((file, index) => {
                                 return (
-                                    <FileUploader.UploadHandler key={index} file={file} autoStart={true}>
+                                    <UploadHandler key={index} id={`upload-handler-${index}`} file={file} autoStart>
                                         <dl>
                                             <dh>{ file.name }</dh>
                                             <dd>
@@ -143,20 +142,20 @@ var MyComponent = React.createClass({
                                                 <span className="file__size">{ file.size / 1000 / 1000 } MB</span>
                                                 <span className="file__progress">{ file.progress }%</span>
                                                 <span className="file__status">
-                                                    {_this._getStatusString(file.status)}
+                                                    {this.getStatusString(file.status)}
                                                 </span>
                                                 <span className="file__error">{ file.error }</span>
                                             </dd>
                                         </dl>
-                                    </FileUploader.UploadHandler>
+                                    </UploadHandler>
                                 )
                             })
                         }
-                    </FileUploader.UploadManager>
+                    </UploadManager>
                 </div>
             </div>
         );
     }
-});
+}
 
-ReactDOM.render(<MyComponent title="react-file-uploader" />, document.getElementById('app'));
+export default FileUpload;
