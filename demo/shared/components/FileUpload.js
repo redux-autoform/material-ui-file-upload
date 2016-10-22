@@ -2,8 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Receiver, UploadHandler, UploadManager, Status } from '../../../lib';
 import _ from 'lodash';
-import { LinearProgress, ListItem, Divider } from 'material-ui';
+import { LinearProgress, ListItem, Divider, IconButton } from 'material-ui';
 import FileIcon from 'material-ui/svg-icons/editor/insert-drive-file';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import fileSize from 'filesize';
 
 class FileUpload extends Component {
     state = {
@@ -29,13 +32,6 @@ class FileUpload extends Component {
         if (target != node) {
             return false;
         }
-
-        files.map((_file) => {
-            if (_file.size > 1000 * 1000) {
-                _file.status = Status.FAILED;
-                _file.error = 'file size exceeded maximum'
-            }
-        });
 
         this.setState({
             files: this.state.files.concat(files)
@@ -90,6 +86,24 @@ class FileUpload extends Component {
         }
     };
 
+    progressToText = ({ progress }) => {
+        return (progress === 100) ? 'Completed' : `${progress}% Done`;
+    };
+
+    toUploadSpeedOrFileSize = ({ progress, size }) => {
+        return (progress === 100) ? fileSize(size) : `${fileSize((size * progress)/100)}/s`;
+    };
+
+    iconButton = ({ progress }) => {
+        let icon = (progress === 100) ? <DeleteIcon/> : <ClearIcon color="red"/>;
+
+        return (
+            <IconButton>
+                {icon}
+            </IconButton>
+        )
+    };
+
     render() {
         let { isPanelOpen, isDragOver, files } = this.state;
         let { title, subtitle } = this.props;
@@ -127,26 +141,26 @@ class FileUpload extends Component {
                         onUploadEnd={this.onFileUpdate}
                     >
                         {
-                            files.map((file, index) => {
-                                return (
-                                    <UploadHandler key={index} id={`upload-handler-${index}`} file={file} autoStart>
-                                        <ListItem
-                                            leftIcon={<FileIcon/>}
-                                            primaryText={file.name}
-                                            secondaryTextLines={2}
-                                            secondaryText={
-                                                <div>
-                                                    <LinearProgress min={0} max={100} mode="determinate" value={file.progress}/>
-                                                    <div>
-                                                        <p>{(file.progress === 100)? 'Completed' : `${file.progress}% Done`}</p>
-                                                    </div>
+                            files.map((file, index) => (
+                                <UploadHandler key={index} id={`upload-handler-${index}`} file={file} autoStart>
+                                    <ListItem
+                                        leftIcon={<FileIcon/>}
+                                        primaryText={file.name}
+                                        secondaryTextLines={2}
+                                        secondaryText={
+                                            <div className="margin-top-10">
+                                                <LinearProgress min={0} max={100} mode="determinate" value={file.progress}/>
+                                                <div className="margin-top-5">
+                                                    <span className="left">{this.progressToText(file)}</span>
+                                                    <span className="right">{this.toUploadSpeedOrFileSize(file)}</span>
                                                 </div>
-                                            }
-                                        />
-                                        <Divider inset/>
-                                    </UploadHandler>
-                                )
-                            })
+                                            </div>
+                                        }
+                                        rightIconButton={this.iconButton(file)}
+                                    />
+                                    <Divider inset/>
+                                </UploadHandler>
+                            ))
                         }
                     </UploadManager>
                 </div>
