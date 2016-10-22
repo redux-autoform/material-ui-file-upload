@@ -2,20 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Receiver, UploadHandler, UploadManager, Status } from '../../../lib';
 import _ from 'lodash';
+import { LinearProgress, ListItem, Divider } from 'material-ui';
+import FileIcon from 'material-ui/svg-icons/editor/insert-drive-file';
 
 class FileUpload extends Component {
     state = {
-        isPanelOpen: false,
+        isPanelOpen: true,
         isDragOver: false,
         files: []
-    };
-
-    openPanel = () => {
-        this.setState({isPanelOpen: true});
-    };
-
-    closePanel = () => {
-        this.setState({isPanelOpen: false});
     };
 
     onDragOver = (e) => {
@@ -46,9 +40,6 @@ class FileUpload extends Component {
         this.setState({
             files: this.state.files.concat(files)
         });
-
-        // if you want to close the panel upon file drop
-        this.closePanel();
     };
 
     onFileProgress = (file) => {
@@ -101,23 +92,28 @@ class FileUpload extends Component {
 
     render() {
         let { isPanelOpen, isDragOver, files } = this.state;
+        let { title, subtitle } = this.props;
+
+        //<span className="file__error">{ file.error }</span>
+        //<span className="file__id">{ file.id } </span>
+        //<span className="file__type">{ file.type } </span>
+        //<span className="file__size">{ file.size / 1000 / 1000 } MB</span>
+        //<span className="file__status">
+          //  {this.getStatusString(file.status)}
+        //</span>
 
         return (
             <div>
-                <h1>{ this.props.title }</h1>
+                <h1>{title}</h1>
                 <p>You can upload files with size with 1 MB at maximum</p>
                 <Receiver
                     ref="uploadPanel"
                     customClass="upload-panel"
                     isOpen={isPanelOpen}
-                    onDragEnter={this.openPanel}
                     onDragOver={this.onDragOver}
-                    onDragLeave={this.closePanel}
                     onFileDrop={this.onFileDrop}>
                     <p>
-                        {
-                            !isDragOver ? 'Drop here' : 'Files detected'
-                        }
+                        {!isDragOver ? 'Drop here' : 'Files detected'}
                     </p>
                 </Receiver>
                 <div>
@@ -134,19 +130,20 @@ class FileUpload extends Component {
                             files.map((file, index) => {
                                 return (
                                     <UploadHandler key={index} id={`upload-handler-${index}`} file={file} autoStart>
-                                        <dl>
-                                            <dh>{ file.name }</dh>
-                                            <dd>
-                                                <span className="file__id">{ file.id } </span>
-                                                <span className="file__type">{ file.type } </span>
-                                                <span className="file__size">{ file.size / 1000 / 1000 } MB</span>
-                                                <span className="file__progress">{ file.progress }%</span>
-                                                <span className="file__status">
-                                                    {this.getStatusString(file.status)}
-                                                </span>
-                                                <span className="file__error">{ file.error }</span>
-                                            </dd>
-                                        </dl>
+                                        <ListItem
+                                            leftIcon={<FileIcon/>}
+                                            primaryText={file.name}
+                                            secondaryTextLines={2}
+                                            secondaryText={
+                                                <div>
+                                                    <LinearProgress min={0} max={100} mode="determinate" value={file.progress}/>
+                                                    <div>
+                                                        <p>{(file.progress === 100)? 'Completed' : `${file.progress}% Done`}</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        />
+                                        <Divider inset/>
                                     </UploadHandler>
                                 )
                             })

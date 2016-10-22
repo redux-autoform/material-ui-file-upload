@@ -51,6 +51,7 @@
     "jest-cli": "*",
     "jsdom": "^7.0.2",
     "lodash": "^4.13.1",
+    "material-ui": "^0.16.1",
     "nock": "^8.0.0",
     "react": "^15.3.1",
     "react-addons-test-utils": "^0.14.8 || ^15.0.0",
@@ -78,6 +79,7 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "debug": "^2.2.0",
+    "filesize": "^3.3.0",
     "invariant": "^2.2.0",
     "lodash": ">=3.10.1",
     "rand-token": "^0.2.1",

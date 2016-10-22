@@ -1,4 +1,5 @@
 html, body, #app, #app > div {
+    font-family: 'Roboto', sans-serif;
     width: 100%;
     height: 100%;
 }
@@ -19,9 +20,9 @@ html, body, #app, #app > div {
     width: 400px;
     height: auto;
     min-height: 200px;
-    border: 2px dashed black;
-    padding: 0 15px 15px;
     overflow: hidden;
+    list-style-type: none;
+    float: left;
 }
 
 .upload-list dd > span {
