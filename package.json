@@ -14,8 +14,8 @@
     "build:demo": "browserify demo/client/index.js -o demo/client/dist/bundle.js -t [ babelify --presets [ es2015 react stage-0] ]"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/lionng429/react-file-uploader.git"
+    "url": "https://github.com/redux-autoform/redux-autoform-file-uploader.git",
+    "type": "git"
   },
   "keywords": [
     "react",
@@ -25,12 +25,12 @@
     "file-upload",
     "file-uploader"
   ],
-  "author": "Marston Ng <tcng@rakudesignstudio.com>",
+  "author": "Jonatan Salas, Daniel Gomez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lionng429/react-file-uploader/issues"
+    "url": "https://github.com/redux-autoform/redux-autoform-file-uploader/issues"
   },
-  "homepage": "https://github.com/lionng429/react-file-uploader",
+  "homepage": "https://github.com/redux-autoform/redux-autoform-file-uploader",
   "devDependencies": {
     "babel": "^6.1.18",
     "babel-cli": "^6.2.0",
