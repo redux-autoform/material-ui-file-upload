@@ -5,11 +5,14 @@ import bindKey from 'lodash/bindKey';
 import clone from 'lodash/clone';
 import request from 'superagent';
 import Status from '../constant/FileStatus';
-import { List } from 'material-ui';
+import cx from 'classnames';
+import { List, Subheader } from 'material-ui';
+import { Flex, Box } from 'reflexbox';
+import _ from 'lodash';
 
 const debug = require('debug')('react-file-upload:FileUploadManager');
 
-class UploadManager extends Component {
+class FileUploadManager extends Component {
 
     componentDidMount() {
         invariant(
@@ -82,17 +85,39 @@ class UploadManager extends Component {
     };
 
     render() {
-        const { style } = this.props;
+        const { style, customClass, children } = this.props;
+        let child = null;
+
+        if (!_.isEmpty(children)) {
+            child = (
+                <div className="scroll-list">
+                    <List style={style}>
+                        {this.getChildren()}
+                    </List>
+                </div>
+            )
+        } else {
+            child = (
+                <Flex className="full-height" align="center" justify="center" column>
+                     <Box py={4}>
+                         <img className="full-width" src="../../image/cloud.svg"/>
+                         <p>Start by Dragging some files</p>
+                     </Box>
+                </Flex>
+            )
+        }
 
         return (
-            <List style={style}>
-                {this.getChildren()}
-            </List>
+            <div className={cx(customClass)}>
+                <Subheader>Recently Uploaded Files</Subheader>
+                {child}
+            </div>
         );
     }
 }
 
-UploadManager.propTypes = {
+FileUploadManager.propTypes = {
+    customClass: PropTypes.string,
     children: PropTypes.array,
     onUploadStart: PropTypes.func,
     onUploadProgress: PropTypes.func,
@@ -103,7 +128,7 @@ UploadManager.propTypes = {
     uploadHeader: PropTypes.object,
 };
 
-UploadManager.defaultProps = {
+FileUploadManager.defaultProps = {
     uploadErrorHandler: (err, res) => {
         let error = null;
         const body = clone(res.body);
@@ -120,4 +145,4 @@ UploadManager.defaultProps = {
     },
 };
 
-export default UploadManager;
+export default FileUploadManager;

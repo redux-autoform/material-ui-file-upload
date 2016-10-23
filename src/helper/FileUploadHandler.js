@@ -10,7 +10,7 @@ import fileSize from 'filesize';
 
 const debug = require('debug')('react-file-upload:FileUploadHandler');
 
-class UploadHandler extends Component {
+class FileUploadHandler extends Component {
     componentDidMount() {
         const { file, upload, autoStart } = this.props;
 
@@ -92,7 +92,7 @@ class UploadHandler extends Component {
     }
 }
 
-UploadHandler.propTypes = {
+FileUploadHandler.propTypes = {
     autoStart: PropTypes.bool,
     file: PropTypes.object,
     id: PropTypes.string,
@@ -101,4 +101,4 @@ UploadHandler.propTypes = {
     upload: PropTypes.func,
 };
 
-export default UploadHandler;
+export default FileUploadHandler;

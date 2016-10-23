@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import FileReceiver from './helper/FileReceiver';
+import FileReceiver from './helper/FileUploadReceiver';
 import FileUploadHandler from './helper/FileUploadHandler';
 import FileUploadManager from './helper/FileUploadManager';
 import { Flex, Box } from 'reflexbox';
@@ -8,28 +8,11 @@ import _ from 'lodash';
 
 class FileUpload extends Component {
     state = {
-        isPanelOpen: true,
-        isDragOver: false,
         files: []
     };
 
-    onDragOver = (e) => {
-        // your codes here:
-        // if you want to check if the files are dragged over
-        // a specific DOM node
-        //if (e.target === node) {
-        //    this.setState({
-        //        isDragOver: true
-        //    });
-        //}
-    };
-
-    onFileDrop = ({target}, files) => {
-        let node = ReactDOM.findDOMNode(this.refs.uploadPanel);
-
-        if (target != node) {
-            return false;
-        }
+    onFileDrop = (files) => {
+        console.info("Calling onFileDrop yay!!");
 
         this.setState({
             files: this.state.files.concat(files)
@@ -81,39 +64,26 @@ class FileUpload extends Component {
     };
 
     render() {
-        let { isPanelOpen, isDragOver, files } = this.state;
-
-        //<span className="file__error">{ file.error }</span>
-        //<span className="file__id">{ file.id } </span>
-        //<span className="file__type">{ file.type } </span>
-        //<span className="file__size">{ file.size / 1000 / 1000 } MB</span>
-        //<span className="file__status">
-          //  {this.getStatusString(file.status)}
-        //</span>
+        let { files } = this.state;
 
         return (
             <Flex wrap>
-                <Box col={12} lg={6} sm={6}>
+                <Box col={12} sm={12} md={6} lg={6}>
                     <div className="padding-10">
                         <FileReceiver
                             ref="uploadPanel"
                             customClass="upload-panel"
-                            isOpen={isPanelOpen}
-                            onDragOver={this.onDragOver}
-                            onFileDrop={this.onFileDrop}>
-                            <p>
-                                {!isDragOver ? 'Drop here' : 'Files detected'}
-                            </p>
-                        </FileReceiver>
+                            isOpen={true}
+                            onFileDrop={this.onFileDrop}
+                        />
                     </div>
                 </Box>
-                <Box col={12} lg={6} sm={6}>
+                <Box col={12} sm={12} md={6} lg={6}>
                     <div className="padding-10">
-                        <p>Upload List</p>
                         <FileUploadManager
-                            customClass="upload-list"
                             files={files}
                             uploadUrl="/upload"
+                            customClass="upload-list"
                             onUploadStart={this.onFileUpdate}
                             onUploadProgress={_.debounce(this.onFileProgress, 150)}
                             onUploadEnd={this.onFileUpdate}

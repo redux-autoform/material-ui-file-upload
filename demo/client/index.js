@@ -14,10 +14,19 @@ const App = (props, context) => (
     <MuiThemeProvider
         muiTheme={getMuiTheme(lightBaseTheme)}
     >
-        <Flex wrap>
-            <Box col={12} lg={12} sm={12} pt={4}>
-                <Card>
-                    <CardTitle title="File Upload Demo"/>
+        <Flex
+            align="center"
+            justify="center"
+            m={1}
+            wrap
+        >
+            <Box
+                col={12}
+                lg={12}
+                sm={12}
+            >
+                <Card containerStyle={{ width: "100%", height: "100%" }}>
+                    <CardTitle title="File Upload Demo" titleStyle={{ paddingLeft: "10px" }}/>
                     <CardText>
                         <FileUpload/>
                     </CardText>
