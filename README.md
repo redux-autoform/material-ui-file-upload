@@ -6,9 +6,15 @@ material-ui-file-upload is under active development, so API maybe change, actual
 
 #Screenshot
 
-This is how the component looks in the Demo:
+This is how the component looks in the Demo
+
+Normal: 
 
 ![Image of File Upload component in demo](https://github.com/redux-autoform/material-ui-file-upload/blob/master/art/file_upload.png)
+
+Responsive:
+
+<img width="400px" height="550px" src="https://github.com/redux-autoform/material-ui-file-upload/blob/master/art/responsive_file_upload.png"/>
 
 # TODOs
 
