@@ -1,13 +1,13 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import invariant from 'invariant';
-import classNames from 'classnames';
 import assign from 'lodash/assign';
 import bindKey from 'lodash/bindKey';
 import clone from 'lodash/clone';
 import request from 'superagent';
-import Status from './constants/Status';
+import Status from '../constant/FileStatus';
+import { List } from 'material-ui';
 
-const debug = require('debug')('react-file-upload:UploadManager');
+const debug = require('debug')('react-file-upload:FileUploadManager');
 
 class UploadManager extends Component {
 
@@ -82,16 +82,18 @@ class UploadManager extends Component {
     };
 
     render() {
-        const { component, customClass, style } = this.props;
+        const { style } = this.props;
 
-        return React.createElement(component, { className: classNames(customClass), style }, this.getChildren());
+        return (
+            <List style={style}>
+                {this.getChildren()}
+            </List>
+        );
     }
 }
 
 UploadManager.propTypes = {
     children: PropTypes.array,
-    component: PropTypes.string,
-    customClass: PropTypes.string,
     onUploadStart: PropTypes.func,
     onUploadProgress: PropTypes.func,
     onUploadEnd: PropTypes.func,
@@ -102,7 +104,6 @@ UploadManager.propTypes = {
 };
 
 UploadManager.defaultProps = {
-    component: 'ul',
     uploadErrorHandler: (err, res) => {
         let error = null;
         const body = clone(res.body);

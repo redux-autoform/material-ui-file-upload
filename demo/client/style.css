@@ -1,34 +1,32 @@
 html, body, #app, #app > div {
     font-family: 'Roboto', sans-serif;
+    background-color: antiquewhite;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    width: 100%;
+    display: inline-block;
 }
 
 .upload-panel {
-    width: 400px;
-    height: 200px;
-    border: 2px dashed black;
+    background-color: #9E9E9E;
+    color: white;
+    width: auto;
+    height: auto;
+    border: 3px dashed black;
     padding: 0 15px;
 }
 
-.upload-panel.hide {
-    display: none;
-    visibility: hidden;
-}
-
 .upload-list {
-    width: 400px;
+    width: auto;
     height: auto;
-    min-height: 200px;
     overflow: hidden;
     list-style-type: none;
     float: left;
-}
-
-.upload-list dd > span {
-    display: block;
-    float: left;
-    width: 100%;
 }
 
 .margin-top-5 {
@@ -45,4 +43,8 @@ html, body, #app, #app > div {
 
 .left {
     float: left;
+}
+
+.padding-10 {
+    padding: 10px;
 }

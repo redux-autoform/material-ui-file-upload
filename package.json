@@ -55,7 +55,8 @@
     "nock": "^8.0.0",
     "react": "^15.3.1",
     "react-addons-test-utils": "^0.14.8 || ^15.0.0",
-    "react-dom": "^0.14.8 || ^15.0.0"
+    "react-dom": "^0.14.8 || ^15.0.0",
+    "react-tap-event-plugin": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^0.14.8 || ^15.0.0"
@@ -81,8 +82,9 @@
     "debug": "^2.2.0",
     "filesize": "^3.3.0",
     "invariant": "^2.2.0",
-    "lodash": ">=3.10.1",
+    "lodash": "^4.13.1",
     "rand-token": "^0.2.1",
+    "reflexbox": "^2.2.2",
     "shortid": "^2.2.6",
     "superagent": "^1.4.0"
   }

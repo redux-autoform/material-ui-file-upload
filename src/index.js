@@ -1,12 +1,14 @@
-import Receiver from './Receiver';
-import UploadManager from './UploadManager';
-import UploadHandler from './UploadHandler';
-import Status from './constants/Status';
+import FileReceiver from './helper/FileReceiver';
+import FileUploadManager from './helper/FileUploadManager';
+import FileUploadHandler from './helper/FileUploadHandler';
+import FileStatus from './constant/FileStatus';
+import FileUpload from './FileUpload';
 
 export {
-    Receiver,
-    UploadManager,
-    UploadHandler,
-    Status,
+    FileReceiver,
+    FileStatus,
+    FileUpload,
+    FileUploadHandler,
+    FileUploadManager
 };
 

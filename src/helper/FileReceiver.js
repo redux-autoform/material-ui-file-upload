@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import invariant from 'invariant';
 import classNames from 'classnames';
 import shortid from 'shortid';
-import status from './constants/Status';
+import status from '../constant/FileStatus';
 
 class Receiver extends Component {
 
@@ -85,13 +85,15 @@ class Receiver extends Component {
     render() {
         const { isOpen, customClass, style, children } = this.props;
 
-        return (
-            isOpen ? (
+        if (isOpen) {
+            return (
                 <div className={classNames(customClass)} style={style}>
                     {children}
                 </div>
-            ) : null
-        );
+            )
+        }
+
+        return null;
     }
 }
 
@@ -104,6 +106,6 @@ Receiver.propTypes = {
     onDragLeave: PropTypes.func,
     onFileDrop: PropTypes.func,
     style: PropTypes.object,
-}
+};
 
 export default Receiver;

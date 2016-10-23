@@ -183,7 +183,7 @@ describe('Receiver', () => {
       expect(finalDragLevel).toEqual(0);
     });
 
-    it('should not call any callback after Receiver did unmount', function test() {
+    it('should not call any callback after FileReceiver did unmount', function test() {
       ReactDOM.unmountComponentAtNode(this.container);
       window.dispatchEvent(this.dragEnterEvent);
       expect(this.onDragEnter).not.toBeCalled();
