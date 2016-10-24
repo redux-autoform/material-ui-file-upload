@@ -36,4 +36,4 @@ lib
 .npmignore
 
 # Examples
-examples/**/bundle.js
+demo/client/dist/bundle.js

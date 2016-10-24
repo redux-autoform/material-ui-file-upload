@@ -26,3 +26,11 @@ export const ScrollableDivWrapper = styled.div`
     overflow-x: hidden;
     height: 88%;
 `;
+
+export const Title = styled.h3`
+    text-align: center;
+`;
+
+export const SubTitle = styled.p`
+    text-align: center;
+`;
