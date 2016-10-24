@@ -16,3 +16,13 @@ export const LeftSpan = styled.span`
 export const RightSpan = styled.span`
     float: right;
 `;
+
+export const FullWidthImage = styled.img`
+    width: 100%;
+`;
+
+export const ScrollableDivWrapper = styled.div`
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 88%;
+`;

@@ -247,12 +247,14 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.RightSpan = exports.LeftSpan = exports.MarginTopDivWrapper = exports.PaddingDivWrapper = undefined;
+exports.ScrollableDivWrapper = exports.FullWidthImage = exports.RightSpan = exports.LeftSpan = exports.MarginTopDivWrapper = exports.PaddingDivWrapper = undefined;
 
 var _templateObject = _taggedTemplateLiteral(['\n    padding: 10px;\n'], ['\n    padding: 10px;\n']),
     _templateObject2 = _taggedTemplateLiteral(['\n    margin-top: 10px;\n'], ['\n    margin-top: 10px;\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n    float: left;\n'], ['\n    float: left;\n']),
-    _templateObject4 = _taggedTemplateLiteral(['\n    float: right;\n'], ['\n    float: right;\n']);
+    _templateObject4 = _taggedTemplateLiteral(['\n    float: right;\n'], ['\n    float: right;\n']),
+    _templateObject5 = _taggedTemplateLiteral(['\n    width: 100%;\n'], ['\n    width: 100%;\n']),
+    _templateObject6 = _taggedTemplateLiteral(['\n    overflow: scroll;\n    overflow-x: hidden;\n    height: 88%;\n'], ['\n    overflow: scroll;\n    overflow-x: hidden;\n    height: 88%;\n']);
 
 var _react = require('react');
 
@@ -277,6 +279,10 @@ var MarginTopDivWrapper = exports.MarginTopDivWrapper = _styledComponents2.defau
 var LeftSpan = exports.LeftSpan = _styledComponents2.default.span(_templateObject3);
 
 var RightSpan = exports.RightSpan = _styledComponents2.default.span(_templateObject4);
+
+var FullWidthImage = exports.FullWidthImage = _styledComponents2.default.img(_templateObject5);
+
+var ScrollableDivWrapper = exports.ScrollableDivWrapper = _styledComponents2.default.div(_templateObject6);
 
 },{"react":701,"styled-components":738}],5:[function(require,module,exports){
 'use strict';
@@ -502,6 +508,8 @@ var _materialUi = require('material-ui');
 
 var _reflexbox = require('reflexbox');
 
+var _BaseComponents = require('./BaseComponents');
+
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -622,9 +630,9 @@ var FileUploadManager = function (_Component) {
             var child = null;
 
             if (!_lodash2.default.isEmpty(children)) {
-                child = _react2.default.createElement('div', { className: 'scroll-list' }, _react2.default.createElement(_materialUi.List, { style: style }, this.getChildren()));
+                child = _react2.default.createElement(_BaseComponents.ScrollableDivWrapper, null, _react2.default.createElement(_materialUi.List, { style: style }, this.getChildren()));
             } else {
-                child = _react2.default.createElement(_reflexbox.Flex, { className: 'full-height', align: 'center', justify: 'center', column: true }, _react2.default.createElement(_reflexbox.Box, { py: 4 }, _react2.default.createElement('img', { className: 'full-width', src: '../../image/cloud.svg' }), _react2.default.createElement('p', null, 'Start by Dragging some files')));
+                child = _react2.default.createElement(_reflexbox.Flex, { className: 'full-height', align: 'center', justify: 'center', column: true }, _react2.default.createElement(_reflexbox.Box, { py: 4 }, _react2.default.createElement(_BaseComponents.FullWidthImage, { className: 'full-width', src: '../../image/cloud.svg' }), _react2.default.createElement('p', null, 'Start by Dragging some files')));
             }
 
             return _react2.default.createElement('div', { className: (0, _classnames2.default)(customClass) }, _react2.default.createElement(_materialUi.Subheader, null, 'Recently Uploaded Files'), child);
@@ -665,7 +673,7 @@ FileUploadManager.defaultProps = {
 
 exports.default = FileUploadManager;
 
-},{"../constant/FileStatus":3,"classnames":123,"debug":125,"invariant":161,"lodash":312,"lodash/assign":294,"lodash/bindKey":295,"lodash/clone":296,"material-ui":457,"react":701,"reflexbox":720,"superagent":779}],7:[function(require,module,exports){
+},{"../constant/FileStatus":3,"./BaseComponents":4,"classnames":123,"debug":125,"invariant":161,"lodash":312,"lodash/assign":294,"lodash/bindKey":295,"lodash/clone":296,"material-ui":457,"react":701,"reflexbox":720,"superagent":779}],7:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };

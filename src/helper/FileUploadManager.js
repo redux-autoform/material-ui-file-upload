@@ -8,6 +8,7 @@ import Status from '../constant/FileStatus';
 import cx from 'classnames';
 import { List, Subheader } from 'material-ui';
 import { Flex, Box } from 'reflexbox';
+import { FullWidthImage, ScrollableDivWrapper } from './BaseComponents';
 import _ from 'lodash';
 
 const debug = require('debug')('react-file-upload:FileUploadManager');
@@ -90,17 +91,17 @@ class FileUploadManager extends Component {
 
         if (!_.isEmpty(children)) {
             child = (
-                <div className="scroll-list">
+                <ScrollableDivWrapper>
                     <List style={style}>
                         {this.getChildren()}
                     </List>
-                </div>
+                </ScrollableDivWrapper>
             )
         } else {
             child = (
                 <Flex className="full-height" align="center" justify="center" column>
                      <Box py={4}>
-                         <img className="full-width" src="../../image/cloud.svg"/>
+                         <FullWidthImage className="full-width" src="../../image/cloud.svg"/>
                          <p>Start by Dragging some files</p>
                      </Box>
                 </Flex>
