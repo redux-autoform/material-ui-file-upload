@@ -3,7 +3,7 @@ import cx from 'classnames';
 import shortId from 'shortid';
 import status from '../constant/FileStatus';
 import CloudIcon from 'material-ui/svg-icons/file/cloud-upload';
-import { SubTitle, CenteredIconBox } from './BaseComponents';
+import { Title, CenteredIconBox } from './BaseComponents';
 import DropZone from 'react-dropzone';
 import { Flex, Box } from 'reflexbox';
 
@@ -52,7 +52,7 @@ class FileUploadReceiver extends Component {
                             <CenteredIconBox>
                                 <CloudIcon color="#424242" style={{ width: "200", height: "200" }}/>
                             </CenteredIconBox>
-                            <SubTitle>Drag Files to Upload or <a onClick={this.openOnClick}>browse</a></SubTitle>
+                            <Title>Drag Files to Upload or <a onClick={this.openOnClick}>browse</a></Title>
                         </Box>
                     </Flex>
                 </DropZone>
