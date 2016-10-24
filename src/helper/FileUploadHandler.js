@@ -7,6 +7,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DownloadIcon from 'material-ui/svg-icons/file/file-download';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import fileSize from 'filesize';
+import { MarginTopDivWrapper, LeftSpan, RightSpan } from './BaseComponents';
 
 const debug = require('debug')('react-file-upload:FileUploadHandler');
 
@@ -81,13 +82,17 @@ class FileUploadHandler extends Component {
         let { progress } = this.props.file;
 
         return (
-            <div className="margin-top-10">
+            <MarginTopDivWrapper>
                 <LinearProgress min={0} max={100} value={progress} mode="determinate"/>
-                <div className="margin-top-5">
-                    <span className="left">{this.progressToText()}</span>
-                    <span className="right">{this.toUploadSpeedOrFileSize()}</span>
-                </div>
-            </div>
+                <MarginTopDivWrapper>
+                    <LeftSpan>
+                        {this.progressToText()}
+                    </LeftSpan>
+                    <RightSpan>
+                        {this.toUploadSpeedOrFileSize()}
+                    </RightSpan>
+                </MarginTopDivWrapper>
+            </MarginTopDivWrapper>
         );
     }
 }

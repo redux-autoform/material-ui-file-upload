@@ -15,6 +15,7 @@ class FileUploadReceiver extends Component {
         for (let i = 0; i < fileList.length; i++) {
             fileList[i].id = shortId.generate();
             fileList[i].status = status.PENDING;
+            fileList[i].uploadDate = Date.now();
             fileList[i].progress = 0;
             fileList[i].src = null;
 

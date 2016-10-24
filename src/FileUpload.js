@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import FileReceiver from './helper/FileUploadReceiver';
 import FileUploadHandler from './helper/FileUploadHandler';
 import FileUploadManager from './helper/FileUploadManager';
 import { Flex, Box } from 'reflexbox';
+import { PaddingDivWrapper } from './helper/BaseComponents';
 import _ from 'lodash';
 
 class FileUpload extends Component {
@@ -11,12 +11,11 @@ class FileUpload extends Component {
         files: []
     };
 
-    onFileDrop = (files) => {
-        console.info("Calling onFileDrop yay!!");
+    onFileDrop = (acceptedFiles) => {
+        let { files } = this.state;
+        files = files.concat(acceptedFiles);
 
-        this.setState({
-            files: this.state.files.concat(files)
-        });
+        this.setState({ files });
     };
 
     onFileProgress = (file) => {
@@ -47,7 +46,7 @@ class FileUpload extends Component {
         });
     };
 
-    getFileUploadHandlers = () => {
+    getItems = () => {
         let { files } = this.state;
 
         if (Array.isArray(files)) {
@@ -69,17 +68,16 @@ class FileUpload extends Component {
         return (
             <Flex wrap>
                 <Box col={12} sm={12} md={6} lg={6}>
-                    <div className="padding-10">
+                    <PaddingDivWrapper>
                         <FileReceiver
-                            ref="uploadPanel"
                             customClass="upload-panel"
-                            isOpen={true}
                             onFileDrop={this.onFileDrop}
+                            isOpen
                         />
-                    </div>
+                    </PaddingDivWrapper>
                 </Box>
                 <Box col={12} sm={12} md={6} lg={6}>
-                    <div className="padding-10">
+                    <PaddingDivWrapper>
                         <FileUploadManager
                             files={files}
                             uploadUrl="/upload"
@@ -88,9 +86,9 @@ class FileUpload extends Component {
                             onUploadProgress={_.debounce(this.onFileProgress, 150)}
                             onUploadEnd={this.onFileUpdate}
                         >
-                            {this.getFileUploadHandlers()}
+                            {this.getItems()}
                         </FileUploadManager>
-                    </div>
+                    </PaddingDivWrapper>
                 </Box>
             </Flex>
         );
