@@ -17,10 +17,6 @@ export const RightSpan = styled.span`
     float: right;
 `;
 
-export const FullWidthImage = styled.img`
-    width: 100%;
-`;
-
 export const ScrollableDivWrapper = styled.div`
     overflow: scroll;
     overflow-x: hidden;
@@ -33,4 +29,11 @@ export const Title = styled.h3`
 
 export const SubTitle = styled.p`
     text-align: center;
+`;
+
+export const CenteredIconBox = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: center;
 `;

@@ -7,8 +7,9 @@ import request from 'superagent';
 import Status from '../constant/FileStatus';
 import cx from 'classnames';
 import { List, Subheader } from 'material-ui';
+import FileIcon from 'material-ui/svg-icons/editor/insert-drive-file';
 import { Flex, Box } from 'reflexbox';
-import { FullWidthImage, ScrollableDivWrapper, Title, SubTitle } from './BaseComponents';
+import { ScrollableDivWrapper, Title, SubTitle, CenteredIconBox } from './BaseComponents';
 import _ from 'lodash';
 
 const debug = require('debug')('react-file-upload:FileUploadManager');
@@ -101,7 +102,9 @@ class FileUploadManager extends Component {
             child = (
                 <Flex align="center" justify="center" column>
                     <Box py={4}>
-                        <FullWidthImage src="../../image/file.svg"/>
+                        <CenteredIconBox>
+                            <FileIcon color="#424242" style={{ width: "200", height: "200" }}/>
+                        </CenteredIconBox>
                         <Title>Ups, You have no files</Title>
                         <SubTitle>Start by Dragging some files</SubTitle>
                     </Box>
@@ -111,7 +114,7 @@ class FileUploadManager extends Component {
 
         return (
             <div className={cx(customClass)}>
-                <Subheader style={{ color: "#424242", backgroundColor: "#F5F5F5", border: "" }}>
+                <Subheader style={{ color: "#424242", backgroundColor: "#F5F5F5" }}>
                     Recently Uploaded Files
                 </Subheader>
                 {child}
